@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Binding var isLoggedOut: Bool
+    @State private var isLoggedOut = true
 
     var body: some View {
 //        WelcomeView()
         if isLoggedOut {
-            WelcomeView(isLoggedOut: $isLoggedOut)
-        } 
+            WelcomeView()
+        } else {
+            MenuView(isLoggedOut: $isLoggedOut)
+        }
     }
 }
 
@@ -377,10 +379,10 @@ struct ProfileView: View {
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    @Binding var isLoggedOut: Bool
-//
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
+struct ContentView_Previews: PreviewProvider {
+    @Binding var isLoggedOut: Bool
+
+    static var previews: some View {
+        ContentView()
+    }
+}

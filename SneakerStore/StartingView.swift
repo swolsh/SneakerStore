@@ -15,7 +15,7 @@ extension UINavigationController {
 }
 
 struct WelcomeView: View {
-    @Binding var isLoggedOut: Bool
+    @State private var isLoggedOut = false
 
     var body: some View {
         NavigationStack {
@@ -110,6 +110,7 @@ struct RegistrationView: View {
                     UserManager.shared.registerUser(username: username, password: password)
                     if password == repassword {
                         registrationSuccess = true
+                        isLoggedOut = false
                     } else {
                         showError = true
                     }
@@ -119,7 +120,7 @@ struct RegistrationView: View {
                     Button("OK", role: .cancel) { }
                 }
 
-                NavigationLink(destination: MenuView(isLoggedOut: $isLoggedOut), isActive: $registrationSuccess, label: { EmptyView() })
+//                NavigationLink(destination: MenuView(isLoggedOut: $isLoggedOut), isActive: $registrationSuccess, label: { EmptyView() })
             }
             
             .navigationTitle("New User")
@@ -167,6 +168,7 @@ struct AuthorizationView: View {
                     if UserManager.shared.authorizeUser(username: username, password: password) {
                         isLoggedIn = true
                         UserManager.shared.printRegisteredUsers()
+                        isLoggedOut = false
                     } else {
                         showError = true
                     }
@@ -176,7 +178,7 @@ struct AuthorizationView: View {
                     Button("OK", role: .cancel) {}
                 }
                 
-                NavigationLink(destination: MenuView(isLoggedOut: $isLoggedOut), isActive: $isLoggedIn, label: { EmptyView() })
+//                NavigationLink(destination: MenuView(isLoggedOut: $isLoggedOut), isActive: $isLoggedIn, label: { EmptyView() })
             }
             
             .navigationTitle("Welcome back!")
@@ -184,8 +186,8 @@ struct AuthorizationView: View {
     }
 }
 
-//struct StartingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WelcomeView()
-//    }
-//}
+struct StartingView_Previews: PreviewProvider {
+    static var previews: some View {
+        WelcomeView()
+    }
+}

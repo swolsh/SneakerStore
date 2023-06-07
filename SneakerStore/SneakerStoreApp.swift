@@ -8,12 +8,10 @@
 import SwiftUI
 
 @main
-struct SneakerStoreApp: App {
-    @State private var isLoggedOut = false
-    
+struct SneakerStoreApp: App {    
     var body: some Scene {
         WindowGroup {
-            ContentView(isLoggedOut: $isLoggedOut)
+            ContentView()
         }
     }
 }
