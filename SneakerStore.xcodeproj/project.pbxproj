@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8123C66C2A31188D00CF0E82 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8123C66B2A31188D00CF0E82 /* OnboardingView.swift */; };
 		81547A5F2A2B5FBC00B2CB7E /* SneakerStoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81547A5E2A2B5FBC00B2CB7E /* SneakerStoreApp.swift */; };
 		81547A612A2B5FBC00B2CB7E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81547A602A2B5FBC00B2CB7E /* ContentView.swift */; };
 		81547A632A2B5FC100B2CB7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81547A622A2B5FC100B2CB7E /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8123C66B2A31188D00CF0E82 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		81547A5B2A2B5FBC00B2CB7E /* SneakerStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SneakerStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81547A5E2A2B5FBC00B2CB7E /* SneakerStoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SneakerStoreApp.swift; sourceTree = "<group>"; };
 		81547A602A2B5FBC00B2CB7E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 			children = (
 				81547A5E2A2B5FBC00B2CB7E /* SneakerStoreApp.swift */,
 				81547A6C2A2B632B00B2CB7E /* Model.swift */,
+				8123C66B2A31188D00CF0E82 /* OnboardingView.swift */,
 				81547A742A2F3C6900B2CB7E /* StartingView.swift */,
 				81547A602A2B5FBC00B2CB7E /* ContentView.swift */,
 				81547A6E2A2B649300B2CB7E /* Controller.swift */,
@@ -155,6 +158,7 @@
 				81547A5F2A2B5FBC00B2CB7E /* SneakerStoreApp.swift in Sources */,
 				81547A6F2A2B649300B2CB7E /* Controller.swift in Sources */,
 				81547A712A2DD6F300B2CB7E /* Modifiers.swift in Sources */,
+				8123C66C2A31188D00CF0E82 /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
