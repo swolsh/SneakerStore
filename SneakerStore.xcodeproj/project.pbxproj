@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24823C7B2A31C91F00A3A5E6 /* obtest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24823C7A2A31C91F00A3A5E6 /* obtest.swift */; };
 		8123C66C2A31188D00CF0E82 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8123C66B2A31188D00CF0E82 /* OnboardingView.swift */; };
 		81547A5F2A2B5FBC00B2CB7E /* SneakerStoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81547A5E2A2B5FBC00B2CB7E /* SneakerStoreApp.swift */; };
 		81547A612A2B5FBC00B2CB7E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81547A602A2B5FBC00B2CB7E /* ContentView.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		24823C7A2A31C91F00A3A5E6 /* obtest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = obtest.swift; sourceTree = "<group>"; };
 		8123C66B2A31188D00CF0E82 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		81547A5B2A2B5FBC00B2CB7E /* SneakerStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SneakerStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81547A5E2A2B5FBC00B2CB7E /* SneakerStoreApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SneakerStoreApp.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				81547A5E2A2B5FBC00B2CB7E /* SneakerStoreApp.swift */,
 				81547A6C2A2B632B00B2CB7E /* Model.swift */,
 				8123C66B2A31188D00CF0E82 /* OnboardingView.swift */,
+				24823C7A2A31C91F00A3A5E6 /* obtest.swift */,
 				81547A742A2F3C6900B2CB7E /* StartingView.swift */,
 				81547A602A2B5FBC00B2CB7E /* ContentView.swift */,
 				81547A6E2A2B649300B2CB7E /* Controller.swift */,
@@ -152,6 +155,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24823C7B2A31C91F00A3A5E6 /* obtest.swift in Sources */,
 				81547A752A2F3C6900B2CB7E /* StartingView.swift in Sources */,
 				81547A6D2A2B632B00B2CB7E /* Model.swift in Sources */,
 				81547A612A2B5FBC00B2CB7E /* ContentView.swift in Sources */,

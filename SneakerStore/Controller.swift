@@ -51,14 +51,6 @@ class UserManager {
     }
 }
 
-//class SessionManager: ObservableObject {
-//    @Published var isLoggedOut = true
-//
-//    func logout() {
-//        isLoggedOut = true
-//    }
-//}
-
 
 class Cart: ObservableObject {
     @Published var products: [Product: Int] = [:]
@@ -91,6 +83,7 @@ class Cart: ObservableObject {
         products[product] = nil
     }
 }
+
 
 
 //struct WebView: UIViewRepresentable {

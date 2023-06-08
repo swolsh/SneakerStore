@@ -29,6 +29,7 @@ struct BlackButton: ViewModifier {
     }
 }
 
+
 extension View {
     func navBarMod() -> some View {
         modifier(NavBar())
@@ -39,6 +40,13 @@ extension View {
     }
 }
 
+
+extension UINavigationController {
+    open override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        navigationBar.topItem?.backButtonDisplayMode = .minimal
+    }
+}
 
 
 let lightGray = Color(red: 0.965, green: 0.965, blue: 0.965)

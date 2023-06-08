@@ -7,16 +7,9 @@
 
 import SwiftUI
 
-extension UINavigationController {
-    open override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        navigationBar.topItem?.backButtonDisplayMode = .minimal
-    }
-}
+
 
 struct WelcomeView: View {
-    @State private var isLoggedOut = false
-
     var body: some View {
         NavigationStack {
             VStack {
@@ -43,7 +36,7 @@ struct WelcomeView: View {
                         .padding(.vertical, 24)
                     
                     
-                    NavigationLink(destination: RegistrationView(isLoggedOut: $isLoggedOut)) {
+                    NavigationLink(destination: RegistrationView()) {
                         Text("Sign Up")
                             .font(.system(size: 17))
                             .foregroundColor(.white)
@@ -51,7 +44,7 @@ struct WelcomeView: View {
                     }
                 }
                 
-                NavigationLink(destination: AuthorizationView(isLoggedOut: $isLoggedOut)) {
+                NavigationLink(destination: AuthorizationView()) {
                     Text("I already have an account")
                         .font(.system(size: 17))
                         .fontWeight(.semibold)
@@ -59,6 +52,7 @@ struct WelcomeView: View {
                 }
             }
             .ignoresSafeArea()
+            .navigationBarBackButtonHidden(true)
         }
     }
 }
@@ -70,7 +64,6 @@ struct RegistrationView: View {
     @State private var repassword = ""
     @State private var showError = false
     
-    @Binding var isLoggedOut: Bool
     
     var body: some View {
         NavigationStack {
@@ -110,7 +103,6 @@ struct RegistrationView: View {
                     UserManager.shared.registerUser(username: username, password: password)
                     if password == repassword {
                         registrationSuccess = true
-                        isLoggedOut = false
                     } else {
                         showError = true
                     }
@@ -120,10 +112,18 @@ struct RegistrationView: View {
                     Button("OK", role: .cancel) { }
                 }
 
-//                NavigationLink(destination: MenuView(isLoggedOut: $isLoggedOut), isActive: $registrationSuccess, label: { EmptyView() })
+                NavigationLink(destination: MenuView(), isActive: $registrationSuccess, label: { EmptyView() })
+                
+//                NavigationLink(destination: {
+//                    MenuView()
+//                }, isActive: $registrationSuccess, label: {
+//                    Text("menuview")
+//                })
+                
+                
             }
-            
             .navigationTitle("New User")
+            
         }
     }
 }
@@ -134,8 +134,6 @@ struct AuthorizationView: View {
     @State var password = ""
     @State private var showError = false
     
-    @Binding var isLoggedOut: Bool
-
     
     var body: some View {        
         NavigationStack {
@@ -168,7 +166,6 @@ struct AuthorizationView: View {
                     if UserManager.shared.authorizeUser(username: username, password: password) {
                         isLoggedIn = true
                         UserManager.shared.printRegisteredUsers()
-                        isLoggedOut = false
                     } else {
                         showError = true
                     }
@@ -178,7 +175,7 @@ struct AuthorizationView: View {
                     Button("OK", role: .cancel) {}
                 }
                 
-//                NavigationLink(destination: MenuView(isLoggedOut: $isLoggedOut), isActive: $isLoggedIn, label: { EmptyView() })
+                NavigationLink(destination: MenuView(), isActive: $isLoggedIn, label: { EmptyView() })
             }
             
             .navigationTitle("Welcome back!")

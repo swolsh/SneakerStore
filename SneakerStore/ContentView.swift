@@ -8,21 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isLoggedOut = true
 
     var body: some View {
-//        WelcomeView()
-        if isLoggedOut {
-            WelcomeView()
-        } else {
-            MenuView(isLoggedOut: $isLoggedOut)
-        }
+        WelcomeView()
     }
 }
 
 struct MenuView: View {
     @StateObject private var cart = Cart()
-    @Binding var isLoggedOut: Bool
 
 
     var body: some View {
@@ -37,11 +30,12 @@ struct MenuView: View {
                     Label("Cart", systemImage: "cart")
                 }
             
-            ProfileView(isLoggedOut: $isLoggedOut)
+            ProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person.crop.circle")
                 }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
@@ -287,8 +281,7 @@ struct ModalView: View {
 }
 
 struct ProfileView: View {
-//    @State private var isLoggedOut = false
-    @Binding var isLoggedOut: Bool
+    @State private var isLoggedOut = false
 
     @State private var signOut = false
     @State private var shoeSize = 44
@@ -323,6 +316,8 @@ struct ProfileView: View {
                                             TextField("44", value: $shoeSize, format: .number)
                                                 .padding(.leading)
                                         }
+                                        .padding(.horizontal, 16)
+                                        .padding(.top, 26)
                                       
                                         
                                         Spacer()
@@ -335,7 +330,8 @@ struct ProfileView: View {
 
                                     }
                                     
-                                    .navigationTitle("New User")
+                                    .navigationTitle("Shoe Size")
+                                    .navigationBarTitleDisplayMode(.inline)
                                 }
 
                             }
@@ -369,7 +365,7 @@ struct ProfileView: View {
                         )
                     }
                     
-//                    NavigationLink(destination: WelcomeView(), isActive: $isLoggedOut, label: { EmptyView() })
+                    NavigationLink(destination: WelcomeView(), isActive: $isLoggedOut, label: { EmptyView() })
 
                 }
                 .navigationTitle("Profile")
