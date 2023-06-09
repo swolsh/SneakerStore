@@ -11,24 +11,24 @@ struct OnboardingView: View {
     @State private var currentPageIndex = 0
     
     var body: some View {
-        TabView(selection: $currentPageIndex) {
+//        TabView(selection: $currentPageIndex) {
             OnboardingStepView1(image1: Image("ob1"), image2: Image("ob2"), imageBG: Image("obbg1"), obButton: "Next")
                 .tabItem {
-                    Text("Slide 1")
+                    Text("")
                 }
 
-            OnboardingStepView2(image1: Image("ob3"), image2: Image("ob4"), imageBG: Image("obbg2"), obButton: "Next")
-                .tabItem {
-                    Text("Slide 2")
-                }
-
-            OnboardingStepView3(image1: Image("ob5"), image2: Image("ob6"), imageBG: Image("obbg3"), obButton: "Finish")
-                .tabItem {
-                    Text("Slide 3")
-                }
-        }
-        .tabViewStyle(PageTabViewStyle())
-        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
+//            OnboardingStepView2(image1: Image("ob3"), image2: Image("ob4"), imageBG: Image("obbg2"), obButton: "Next")
+//                .tabItem {
+//                    Text("Slide 2")
+//                }
+//
+//            OnboardingStepView3(image1: Image("ob5"), image2: Image("ob6"), imageBG: Image("obbg3"), obButton: "Finish")
+//                .tabItem {
+//                    Text("Slide 3")
+//                }
+//        }
+//        .tabViewStyle(PageTabViewStyle())
+//        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
         .ignoresSafeArea()
     }
 }
@@ -87,15 +87,22 @@ struct OnboardingStepView1: View {
                                 .font(.system(size: 17))
                                 .padding(.bottom, 24)
                             
-                            //                        Button(obButton) {
-                            //                            proceedToWelcomePage = true
-                            //                        }
-                            //                        .blackButtonMod()
-                            
-                            NavigationLink(destination: WelcomeView()) {
-                                Text("Next")
-                                    .blackButtonMod()
+                            Button(obButton) {
+                                proceedToWelcomePage = true
                             }
+                            .blackButtonMod()
+                            
+//                            NavigationLink(destination: WelcomeView()) {
+//                                Text("Next")
+//                                    .blackButtonMod()
+//                            }
+                            
+                            NavigationLink(destination: WelcomeView(), isActive: $proceedToWelcomePage, label: { EmptyView() })
+                            
+//                            if proceedToWelcomePage {
+//                                WelcomeView()
+//                            }
+//
                             
                         }
                     }
@@ -105,36 +112,36 @@ struct OnboardingStepView1: View {
     }
 }
 
-struct OnboardingStepView2: View {
-    let image1: Image
-    let image2: Image
-    let imageBG: Image
-    let obButton: String
-    
-    @State private var obFinished = false
-    
-    var onBoardingBody: some View = OnboardingStepView1(image1: Image("ob3"), image2: Image("ob4"), imageBG: Image("obbg2"), obButton: "Next").body
-    
-    var body: some View {
-        onBoardingBody
-        
-    }
-}
-
-struct OnboardingStepView3: View {
-    let image1: Image
-    let image2: Image
-    let imageBG: Image
-    let obButton: String
-    
-    @State private var obFinished = false
-    
-    var onBoardingBody: some View = OnboardingStepView1(image1: Image("ob5"), image2: Image("ob6"), imageBG: Image("obbg3"), obButton: "Finish").body
-    
-    var body: some View {
-        onBoardingBody
-    }
-}
+//struct OnboardingStepView2: View {
+//    let image1: Image
+//    let image2: Image
+//    let imageBG: Image
+//    let obButton: String
+//
+//    @State private var obFinished = false
+//
+//    var onBoardingBody: some View = OnboardingStepView1(image1: Image("ob3"), image2: Image("ob4"), imageBG: Image("obbg2"), obButton: "Next").body
+//
+//    var body: some View {
+//        onBoardingBody
+//
+//    }
+//}
+//
+//struct OnboardingStepView3: View {
+//    let image1: Image
+//    let image2: Image
+//    let imageBG: Image
+//    let obButton: String
+//
+//    @State private var obFinished = false
+//
+//    var onBoardingBody: some View = OnboardingStepView1(image1: Image("ob5"), image2: Image("ob6"), imageBG: Image("obbg3"), obButton: "Finish").body
+//
+//    var body: some View {
+//        onBoardingBody
+//    }
+//}
 
 
 struct OnboardingView_Previews: PreviewProvider {

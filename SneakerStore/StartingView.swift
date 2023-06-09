@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 struct WelcomeView: View {
     var body: some View {
         NavigationStack {
@@ -53,6 +51,7 @@ struct WelcomeView: View {
             }
             .ignoresSafeArea()
             .navigationBarBackButtonHidden(true)
+//            .navigationTitle("qw")
         }
     }
 }
@@ -67,6 +66,7 @@ struct RegistrationView: View {
     
     var body: some View {
         NavigationStack {
+            
             VStack {
                 
                 VStack(spacing: 16){
@@ -89,7 +89,7 @@ struct RegistrationView: View {
                     
                     ZStack {
                         RoundedRectangle(cornerRadius: 4)
-                            .frame(height: 48) 
+                            .frame(height: 48)
                             .foregroundColor(lightGray)
                         SecureField("Repeat password", text: $repassword)
                             .padding(.leading)
@@ -111,19 +111,19 @@ struct RegistrationView: View {
                 .alert("Password does not match", isPresented: $showError) {
                     Button("OK", role: .cancel) { }
                 }
-
+                
                 NavigationLink(destination: MenuView(), isActive: $registrationSuccess, label: { EmptyView() })
                 
-//                NavigationLink(destination: {
-//                    MenuView()
-//                }, isActive: $registrationSuccess, label: {
-//                    Text("menuview")
-//                })
+                //                NavigationLink(destination: {
+                //                    MenuView()
+                //                }, isActive: $registrationSuccess, label: {
+                //                    Text("menuview")
+                //                })
                 
                 
             }
             .navigationTitle("New User")
-            
+                
         }
     }
 }
@@ -165,7 +165,7 @@ struct AuthorizationView: View {
                 Button("Sign In ") {
                     if UserManager.shared.authorizeUser(username: username, password: password) {
                         isLoggedIn = true
-                        UserManager.shared.printRegisteredUsers()
+//                        UserManager.shared.printRegisteredUsers()
                     } else {
                         showError = true
                     }

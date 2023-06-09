@@ -7,8 +7,9 @@
 
 import Foundation
 import WebKit
+import SwiftUI
 
-class UserManager {
+class UserManager: ObservableObject {
     static var shared = UserManager()
     
     private var users: [User] = []
@@ -33,7 +34,7 @@ class UserManager {
         guard let userData = UserDefaults.standard.array(forKey: "UserArray") as? [[String: String]] else {
             return nil
         }
-        
+
         let users = userData.compactMap { dict -> User? in
             guard let username = dict["username"], let password = dict["password"] else {
                 return nil
@@ -43,12 +44,23 @@ class UserManager {
         return users
     }
     
-    func printRegisteredUsers() {
-        let registeredUsers = UserManager.shared.retrieveUserData()
-        for user in registeredUsers! {
-            print("Username: \(user.username), Password: \(user.password)")
+    func updateUserData(newUsername: String, newPassword: String) {
+        guard let index = users.firstIndex(where: { $0.username == newUsername }) else {
+            return
         }
+        
+        users[index].username = newUsername
+        users[index].password = newPassword
+        
+        storeUserData()
     }
+    
+//    func printRegisteredUsers() {
+//        let registeredUsers = UserManager.shared.retrieveUserData()
+//        for user in registeredUsers! {
+//            print("Username: \(user.username), Password: \(user.password)")
+//        }
+//    }
 }
 
 

@@ -9,13 +9,12 @@ import Foundation
 import SwiftUI
 
 struct User {
-    let username: String
-    let password: String
+    var username: String
+    var password: String
 }
 
 struct Product: Identifiable, Hashable {
     let id = UUID()
-    
     let name: String
     let description: String
     let price: Int

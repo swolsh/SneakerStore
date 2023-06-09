@@ -10,13 +10,13 @@ import SwiftUI
 struct ContentView: View {
 
     var body: some View {
-        WelcomeView()
+        OnboardingView()
     }
 }
 
 struct MenuView: View {
     @StateObject private var cart = Cart()
-
+    @StateObject private var userManager = UserManager()
 
     var body: some View {
         TabView {
@@ -30,7 +30,7 @@ struct MenuView: View {
                     Label("Cart", systemImage: "cart")
                 }
             
-            ProfileView()
+            ProfileView(userManager: userManager)
                 .tabItem {
                     Label("Profile", systemImage: "person.crop.circle")
                 }
@@ -42,6 +42,9 @@ struct MenuView: View {
 struct CatalogView: View {
     @ObservedObject var cart: Cart
     let columns = [GridItem(.fixed(174), spacing: 10), GridItem(.fixed(174))]
+    
+    @State private var tappedProducts: Set<UUID> = []
+
     
     var body: some View {
         NavigationStack {
@@ -77,17 +80,27 @@ struct CatalogView: View {
                                     .padding(.leading, 4)
                                     .padding(.bottom, 1)
                                 
-                                            
-                                    Button("Add to cart") {
-                                        cart.addToCart(i)
+                                    
+                                    Button(action: {
+                                        if tappedProducts.contains(i.id) {
+                                            tappedProducts.remove(i.id)
+                                            cart.removeAllFromCart(i)
+                                        } else {
+                                            tappedProducts.insert(i.id)
+                                            cart.addToCart(i)
+                                        }
+                                    }) {
+                                        Text(tappedProducts.contains(i.id) && cart.products.keys.contains(i) ? "Remove" : "Add to cart")
+                                            .foregroundColor(.white)
+                                            .font(.system(size: 15))
+                                            .frame(width: 166, height: 40)
+                                            .background(tappedProducts.contains(i.id) && cart.products.keys.contains(i) ? Color(red: 0, green: 0, blue: 0, opacity: 0.7) : Color.black)
+                                            .cornerRadius(100)
+                                            .padding(.horizontal, 4)
+                                            .padding(.bottom, 10)
                                     }
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 15))
-                                        .frame(width: 166, height: 40)
-                                        .background(.black)
-                                        .cornerRadius(100)
-                                        .padding(.horizontal, 4)
-                                        .padding(.bottom, 10)
+
+
                                 }
                             }
                         }
@@ -273,6 +286,7 @@ struct ModalView: View {
                 
                 Button("Get back to shopping") {
                     isPresented = false
+                    cart.products.removeAll()
                 }
                 .blackButtonMod()
             }
@@ -281,10 +295,15 @@ struct ModalView: View {
 }
 
 struct ProfileView: View {
+    @ObservedObject var userManager: UserManager
+    
     @State private var isLoggedOut = false
 
     @State private var signOut = false
     @State private var shoeSize = 44
+    
+    @State private var newUsername = ""
+    @State private var newPassword = ""
     
     var body: some View {
         NavigationStack {
@@ -295,6 +314,69 @@ struct ProfileView: View {
                     List {
                         Section {
                             NavigationLink("Account Information") {
+//                                Text("\(UserManager.retrieveUserData.user)")
+//                                Text("\(userManager.retrieveUserData()!)" as String)
+//                                userManager.retrieveUserData()
+                                
+                                
+                                if let users = userManager.retrieveUserData() {
+                                    ForEach(users, id: \.username) { user in
+                                        VStack {
+                                            
+                                            VStack(spacing: 16){
+                                                ZStack {
+                                                    RoundedRectangle(cornerRadius: 4)
+                                                        .frame(height: 48)
+                                                        .foregroundColor(lightGray)
+//                                                    TextField("Username", text: user.username)
+//                                                        .padding(.leading)
+//                                                    Text("\(user.username)")
+                                                    TextField("\(user.username)", text: $newUsername)
+                                                        .padding(.leading)
+                                                }
+                                                .padding(.top, 62)
+                                                
+                                                ZStack {
+                                                    RoundedRectangle(cornerRadius: 4)
+                                                        .frame(height: 48)
+                                                        .foregroundColor(lightGray)
+//                                                    SecureField("Password", text: user.password)
+//                                                        .padding(.leading)
+//                                                    Text("\(user.password)")
+                                                    TextField("\(user.password)", text: $newPassword)
+                                                        .padding(.leading)
+
+                                                }
+                                                
+//                                                ZStack {
+//                                                    RoundedRectangle(cornerRadius: 4)
+//                                                        .frame(height: 48)
+//                                                        .foregroundColor(lightGray)
+//                                                    SecureField("Repeat password", text: $repassword)
+//                                                        .padding(.leading)
+//                                                }
+                                            }
+                                            .padding()
+                                            
+                                            Spacer()
+//
+                                            Button("Save changes") {
+                                                userManager.updateUserData(newUsername: newUsername, newPassword: newPassword)
+                                                userManager.storeUserData()
+                                            }
+                                            .blackButtonMod()
+//                                            .alert("Password does not match", isPresented: $showError) {
+//                                                Button("OK", role: .cancel) { }
+//                                            }
+                                          
+                                          
+                                            
+                                        }
+
+                                    }
+                                } else {
+                                    Text("No user data found.")
+                                }
                                 
                             }
                         }
@@ -376,9 +458,14 @@ struct ProfileView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
-    @Binding var isLoggedOut: Bool
-
     static var previews: some View {
         ContentView()
     }
 }
+
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let userManager = UserManager()
+//        ProfileView(userManager: userManager)
+//    }
+//}
