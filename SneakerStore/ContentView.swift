@@ -17,6 +17,7 @@ struct ContentView: View {
 struct MenuView: View {
     @StateObject private var cart = Cart()
     @StateObject private var userManager = UserManager()
+    @StateObject private var orderHistory = OrderHistory()
 
     var body: some View {
         TabView {
@@ -25,12 +26,12 @@ struct MenuView: View {
                     Label("Catalog", systemImage: "house")
                 }
             
-            CartView(cart: cart)
+            CartView(cart: cart, singleOrder: SingleOrder(orderHistory: orderHistory), orderHistory: orderHistory)
                 .tabItem {
                     Label("Cart", systemImage: "cart")
                 }
             
-            ProfileView(userManager: userManager)
+            ProfileView(userManager: userManager, cart: cart, singleOrder: SingleOrder(orderHistory: orderHistory), orderHistory: orderHistory)
                 .tabItem {
                     Label("Profile", systemImage: "person.crop.circle")
                 }
@@ -117,6 +118,8 @@ struct CatalogView: View {
 
 struct CartView: View {
     @ObservedObject var cart: Cart
+    @ObservedObject var singleOrder: SingleOrder
+    @ObservedObject var orderHistory: OrderHistory
     @State private var showAlert = false
     @State private var showModal = false
     
@@ -217,6 +220,10 @@ struct CartView: View {
                                 message: Text("Are you sure you want to confirm?"),
                                 primaryButton: .default(Text("Confirm").foregroundColor(.black)) {
                                     showModal = true
+                                    singleOrder.addToSingleOrderAll(from: cart)
+                                    let order = Order(name: "Example Order", date: Date(), numberOfItems: singleOrder.totalQuantity, price: singleOrder.totalPrice)
+
+                                    orderHistory.addToOrderHistory(order)
                                 },
                                 secondaryButton: .cancel(Text("Cancel").foregroundColor(.black))
                             )
@@ -296,6 +303,9 @@ struct ModalView: View {
 
 struct ProfileView: View {
     @ObservedObject var userManager: UserManager
+    @ObservedObject var cart: Cart
+    @ObservedObject var singleOrder: SingleOrder
+    @ObservedObject var orderHistory: OrderHistory
     
     @State private var isLoggedOut = false
 
@@ -383,7 +393,68 @@ struct ProfileView: View {
                         Section {
                             NavigationLink("Order History") {
                                 NavigationStack {
-                                    
+                                    List {
+                                        ForEach(Array(orderHistory.orders.keys), id: \.self) { i in
+                                            
+                                            NavigationLink("Order") {
+                                                List {
+                                                    Section {
+                                                        HStack {
+                                                            Text("Ordered")
+                                                            Spacer()
+                                                            Text("\(i.date)")
+                                                                .fontWeight(.semibold)
+                                                        }
+                                                    }
+                                                    .font(.system(size: 13))
+                                                    
+                                                    Section {
+                                                        HStack {
+                                                            Text("\(singleOrder.totalQuantity) items: Total (Including Delivery)")
+                                                            Spacer()
+                                                            Text("$\(singleOrder.totalPrice)")
+                                                                .fontWeight(.semibold)
+                                                        }
+                                                    }
+                                                    .font(.system(size: 13))
+                                                    
+                                                    ForEach(Array(singleOrder.singleOrder.keys), id: \.self) { i in
+                                                        Section {
+                                                            HStack {
+                                                                i.image
+                                                                    .frame(width: 140, height: 140)
+                                                                    .padding(.horizontal, 16)
+                                                                    .padding(.vertical, 10)
+                                                                
+                                                                VStack {
+                                                                    Group {
+                                                                        Text("\(i.name)")
+                                                                            .font(.system(size: 13))
+                                                                            .fontWeight(.semibold)
+                                                                        
+                                                                        Text("\(i.description)")
+                                                                            .font(.system(size: 12))
+                                                                            .foregroundColor(Color(red: 0.557, green: 0.557, blue: 0.576))
+                                                                        
+                                                                        Text("$ \(i.price)")
+                                                                            .font(.system(size: 12))
+                                                                            .fontWeight(.semibold)
+                                                                    }
+                                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                                                    .padding(.bottom, 1)
+                                                                    
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                .listMod()
+                                            }
+                                        }
+                                        
+                                    }
+                                    .listMod()
+                                    .navigationTitle("Order History")
                                 }
                             }
                         }
@@ -430,9 +501,7 @@ struct ProfileView: View {
                             }
                         }
                     }
-                    .listStyle(.grouped)
-                    .background(lightGray)
-                    .scrollContentBackground(.hidden)
+                    .listMod()
                     
                     Button("Sign Out") {
                         signOut = true

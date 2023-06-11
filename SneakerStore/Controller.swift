@@ -80,7 +80,7 @@ class UserManager: ObservableObject {
 
 class Cart: ObservableObject {
     @Published var products: [Product: Int] = [:]
-    @Published var singleOrder: [Product: Int] = [:]
+//    @Published var singleOrder: [Product: Int] = [:]
 
     var totalPrice: Int {
         products.reduce(0) { $0 + ($1.key.price * Int($1.value)) }
@@ -111,42 +111,66 @@ class Cart: ObservableObject {
     }
     
     
-    func addToSingleOrder(_ product: Product) {
+//    func addToSingleOrder(_ product: Product) {
 //        if let count = singleOrder[product] {
 //            singleOrder[product] = count + 1
 //        } else {
 //            singleOrder[product] = 1
 //        }
-        singleOrder = products
-    }
+//    }
+    
+//    func addToSingleOrderAll() {
+////        singleOrder.removeAll()
+//
+//        for (product, count) in products {
+//            singleOrder[product] = count
+//        }
+//    }
+
     
 }
 
-//class Order: ObservableObject {
-//    @Published var carts: [Product: Int] = [:]
-//
-//}
+class SingleOrder: ObservableObject {
+    @Published var singleOrder: [Product: Int] = [:]
+    
+    let orderHistory: OrderHistory
+        
+    init(orderHistory: OrderHistory) {
+        self.orderHistory = orderHistory
+    }
+    
+    func addToSingleOrderAll(from cart: Cart) {
+        for (product, count) in cart.products {
+            singleOrder[product] = count
+            
+//            let order = Order(name: product.name, date: Date(), numberOfItems: totalQuantity, price: totalPrice)
+//            orderHistory.addToOrderHistory(order)
+        }
+    }
+    
+    var totalPrice: Int {
+        singleOrder.reduce(0) { $0 + ($1.key.price * Int($1.value)) }
+    }
+    
+    var totalQuantity: Int {
+        singleOrder.values.reduce(0, +)
+    }
+
+}
 
 
 class OrderHistory: ObservableObject {
     @Published var orders: [Order: Int] = [:]
-
-    func addToOrderHistory(){}
+    
+    func addToOrderHistory(_ order: Order) {
+        if let count = orders[order] {
+            orders[order] = count + 1
+        } else {
+            orders[order] = 1
+        }
+    }
 }
 
-
-
-//class Cart: ObservableObject {
-//    @Published var orders: [Order] = []
-//
-//    func addToOrders(_ order: Order) {
-//        if let count = orders[order] {
-//            orders[order] = count + 1
-//        } else {
-//            orders[order] = 1
-//        }
-//    }
-//}
 
 
 //struct WebView: UIViewRepresentable {

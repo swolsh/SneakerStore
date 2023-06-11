@@ -29,6 +29,14 @@ struct BlackButton: ViewModifier {
     }
 }
 
+struct ListMod: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .listStyle(.grouped)
+            .background(lightGray)
+            .scrollContentBackground(.hidden)
+    }
+}
 
 extension View {
     func navBarMod() -> some View {
@@ -37,6 +45,10 @@ extension View {
     
     func blackButtonMod() -> some View {
         modifier(BlackButton())
+    }
+    
+    func listMod() -> some View {
+        modifier(ListMod())
     }
 }
 
