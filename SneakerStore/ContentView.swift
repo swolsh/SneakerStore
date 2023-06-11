@@ -392,66 +392,69 @@ struct ProfileView: View {
                         
                         Section {
                             NavigationLink("Order History") {
+                                
+//                                OrderHistoryView(orderHistory: orderHistory)
                                 NavigationStack {
                                     List {
                                         ForEach(Array(orderHistory.orders.keys), id: \.self) { i in
-                                            
-                                            NavigationLink("Order") {
-                                                List {
-                                                    Section {
-                                                        HStack {
-                                                            Text("Ordered")
-                                                            Spacer()
-                                                            Text("\(i.date)")
-                                                                .fontWeight(.semibold)
-                                                        }
-                                                    }
-                                                    .font(.system(size: 13))
-                                                    
-                                                    Section {
-                                                        HStack {
-                                                            Text("\(singleOrder.totalQuantity) items: Total (Including Delivery)")
-                                                            Spacer()
-                                                            Text("$\(singleOrder.totalPrice)")
-                                                                .fontWeight(.semibold)
-                                                        }
-                                                    }
-                                                    .font(.system(size: 13))
-                                                    
-                                                    ForEach(Array(singleOrder.singleOrder.keys), id: \.self) { i in
+                                            Section {
+                                                NavigationLink("Order") {
+                                                    List {
                                                         Section {
                                                             HStack {
-                                                                i.image
-                                                                    .frame(width: 140, height: 140)
-                                                                    .padding(.horizontal, 16)
-                                                                    .padding(.vertical, 10)
-                                                                
-                                                                VStack {
-                                                                    Group {
-                                                                        Text("\(i.name)")
-                                                                            .font(.system(size: 13))
-                                                                            .fontWeight(.semibold)
-                                                                        
-                                                                        Text("\(i.description)")
-                                                                            .font(.system(size: 12))
-                                                                            .foregroundColor(Color(red: 0.557, green: 0.557, blue: 0.576))
-                                                                        
-                                                                        Text("$ \(i.price)")
-                                                                            .font(.system(size: 12))
-                                                                            .fontWeight(.semibold)
+                                                                Text("Ordered")
+                                                                Spacer()
+                                                                Text("\(i.date)")
+                                                                    .fontWeight(.semibold)
+                                                            }
+                                                        }
+                                                        .font(.system(size: 13))
+
+                                                        Section {
+                                                            HStack {
+                                                                Text("\(singleOrder.totalQuantity) items: Total (Including Delivery)")
+                                                                Spacer()
+                                                                Text("$\(singleOrder.totalPrice)")
+                                                                    .fontWeight(.semibold)
+                                                            }
+                                                        }
+                                                        .font(.system(size: 13))
+
+                                                        ForEach(Array(singleOrder.singleOrder.keys), id: \.self) { i in
+                                                            Section {
+                                                                HStack {
+                                                                    i.image
+                                                                        .frame(width: 140, height: 140)
+                                                                        .padding(.horizontal, 16)
+                                                                        .padding(.vertical, 10)
+
+                                                                    VStack {
+                                                                        Group {
+                                                                            Text("\(i.name)")
+                                                                                .font(.system(size: 13))
+                                                                                .fontWeight(.semibold)
+
+                                                                            Text("\(i.description)")
+                                                                                .font(.system(size: 12))
+                                                                                .foregroundColor(Color(red: 0.557, green: 0.557, blue: 0.576))
+
+                                                                            Text("$ \(i.price)")
+                                                                                .font(.system(size: 12))
+                                                                                .fontWeight(.semibold)
+                                                                        }
+                                                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                                                        .padding(.bottom, 1)
+
                                                                     }
-                                                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                                                    .padding(.bottom, 1)
-                                                                    
                                                                 }
                                                             }
                                                         }
                                                     }
+                                                    .listMod()
                                                 }
-                                                .listMod()
                                             }
                                         }
-                                        
+
                                     }
                                     .listMod()
                                     .navigationTitle("Order History")
@@ -529,7 +532,7 @@ struct ProfileView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuView()
+        OnboardingView()
     }
 }
 
