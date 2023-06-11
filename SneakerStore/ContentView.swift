@@ -301,6 +301,7 @@ struct ProfileView: View {
 
     @State private var signOut = false
     @State private var shoeSize = 44
+    @State private var newShoeSize = Int()
     
     @State private var newUsername = ""
     @State private var newPassword = ""
@@ -314,11 +315,6 @@ struct ProfileView: View {
                     List {
                         Section {
                             NavigationLink("Account Information") {
-//                                Text("\(UserManager.retrieveUserData.user)")
-//                                Text("\(userManager.retrieveUserData()!)" as String)
-//                                userManager.retrieveUserData()
-                                
-                                
                                 if let users = userManager.retrieveUserData() {
                                     ForEach(users, id: \.username) { user in
                                         VStack {
@@ -328,11 +324,12 @@ struct ProfileView: View {
                                                     RoundedRectangle(cornerRadius: 4)
                                                         .frame(height: 48)
                                                         .foregroundColor(lightGray)
-//                                                    TextField("Username", text: user.username)
-//                                                        .padding(.leading)
-//                                                    Text("\(user.username)")
+//
                                                     TextField("\(user.username)", text: $newUsername)
                                                         .padding(.leading)
+//                                                        .onAppear {
+//                                                            Text("\(newUsername)")
+//                                                        }
                                                 }
                                                 .padding(.top, 62)
                                                 
@@ -345,6 +342,9 @@ struct ProfileView: View {
 //                                                    Text("\(user.password)")
                                                     TextField("\(user.password)", text: $newPassword)
                                                         .padding(.leading)
+//                                                        .onAppear {
+//                                                            Text("\(newPassword)")
+//                                                        }
 
                                                 }
                                                 
@@ -361,8 +361,7 @@ struct ProfileView: View {
                                             Spacer()
 //
                                             Button("Save changes") {
-                                                userManager.updateUserData(newUsername: newUsername, newPassword: newPassword)
-                                                userManager.storeUserData()
+                                                userManager.updateUserData(oldUsername: user.username, newUsername: newUsername, newPassword: newPassword)
                                             }
                                             .blackButtonMod()
 //                                            .alert("Password does not match", isPresented: $showError) {
@@ -383,7 +382,9 @@ struct ProfileView: View {
                         
                         Section {
                             NavigationLink("Order History") {
-                                
+                                NavigationStack {
+                                    
+                                }
                             }
                         }
                         
@@ -395,7 +396,7 @@ struct ProfileView: View {
                                             RoundedRectangle(cornerRadius: 4)
                                                 .frame(height: 48)
                                                 .foregroundColor(lightGray)
-                                            TextField("44", value: $shoeSize, format: .number)
+                                            TextField("\(shoeSize)", value: $newShoeSize, format: .number)
                                                 .padding(.leading)
                                         }
                                         .padding(.horizontal, 16)
@@ -405,7 +406,7 @@ struct ProfileView: View {
                                         Spacer()
                                         
                                         Button("Save changes") {
-                                            
+                                            shoeSize = newShoeSize
                                         }
                                         .blackButtonMod()
                                         
@@ -459,7 +460,7 @@ struct ProfileView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        MenuView()
     }
 }
 

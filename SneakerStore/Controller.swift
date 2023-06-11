@@ -35,7 +35,7 @@ class UserManager: ObservableObject {
             return nil
         }
 
-        let users = userData.compactMap { dict -> User? in
+        var users = userData.compactMap { dict -> User? in
             guard let username = dict["username"], let password = dict["password"] else {
                 return nil
             }
@@ -44,16 +44,30 @@ class UserManager: ObservableObject {
         return users
     }
     
-    func updateUserData(newUsername: String, newPassword: String) {
-        guard let index = users.firstIndex(where: { $0.username == newUsername }) else {
-            return
+//    func updateUserData(newUsername: String, newPassword: String) {
+//        guard let index = users.firstIndex(where: { $0.username == newUsername }) else {
+//            return
+//        }
+//
+//        users[index].username = newUsername
+//        users[index].password = newPassword
+//
+//        storeUserData()
+//    }
+    
+    func updateUserData(oldUsername: String, newUsername: String, newPassword: String) {
+            // Find the user to update
+            guard let index = users.firstIndex(where: { $0.username == oldUsername }) else {
+                return
+            }
+            
+            // Update the user's information
+            users[index].username = newUsername
+            users[index].password = newPassword
+            
+            // Update stored user data
+            storeUserData()
         }
-        
-        users[index].username = newUsername
-        users[index].password = newPassword
-        
-        storeUserData()
-    }
     
 //    func printRegisteredUsers() {
 //        let registeredUsers = UserManager.shared.retrieveUserData()
@@ -66,6 +80,7 @@ class UserManager: ObservableObject {
 
 class Cart: ObservableObject {
     @Published var products: [Product: Int] = [:]
+    @Published var singleOrder: [Product: Int] = [:]
 
     var totalPrice: Int {
         products.reduce(0) { $0 + ($1.key.price * Int($1.value)) }
@@ -94,8 +109,44 @@ class Cart: ObservableObject {
     func removeAllFromCart(_ product: Product) {
         products[product] = nil
     }
+    
+    
+    func addToSingleOrder(_ product: Product) {
+//        if let count = singleOrder[product] {
+//            singleOrder[product] = count + 1
+//        } else {
+//            singleOrder[product] = 1
+//        }
+        singleOrder = products
+    }
+    
 }
 
+//class Order: ObservableObject {
+//    @Published var carts: [Product: Int] = [:]
+//
+//}
+
+
+class OrderHistory: ObservableObject {
+    @Published var orders: [Order: Int] = [:]
+
+    func addToOrderHistory(){}
+}
+
+
+
+//class Cart: ObservableObject {
+//    @Published var orders: [Order] = []
+//
+//    func addToOrders(_ order: Order) {
+//        if let count = orders[order] {
+//            orders[order] = count + 1
+//        } else {
+//            orders[order] = 1
+//        }
+//    }
+//}
 
 
 //struct WebView: UIViewRepresentable {

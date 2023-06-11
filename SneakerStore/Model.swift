@@ -29,6 +29,13 @@ struct Product: Identifiable, Hashable {
     }
 }
 
+struct Order: Hashable {
+    let name: String
+    let date: Date
+    let numberOfItems: Int
+    let price: Int
+}
+
 let productsData = [
     Product(name: "Dolce & Gabanna", description: "Кеды с принтом граффити", price: 1251, image: Image("dg")),
     Product(name: "Off-White", description: "Кроссовки Off-Court 3.0", price: 1251, image: Image("offwhite")),
