@@ -56,18 +56,15 @@ class UserManager: ObservableObject {
 //    }
     
     func updateUserData(oldUsername: String, newUsername: String, newPassword: String) {
-            // Find the user to update
-            guard let index = users.firstIndex(where: { $0.username == oldUsername }) else {
-                return
-            }
-            
-            // Update the user's information
-            users[index].username = newUsername
-            users[index].password = newPassword
-            
-            // Update stored user data
-            storeUserData()
+        guard let index = users.firstIndex(where: { $0.username == oldUsername }) else {
+            return
         }
+        
+        users[index].username = newUsername
+        users[index].password = newPassword
+        
+        storeUserData()
+    }
     
 //    func printRegisteredUsers() {
 //        let registeredUsers = UserManager.shared.retrieveUserData()
